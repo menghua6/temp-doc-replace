@@ -13,7 +13,7 @@ import (
 func main() {
 	// referDate := time.Date(1899, 12, 30, 0, 0, 0, 0, time.Local) 日期数字代表与该日期相差了多少天
 
-	list, err := xls.OpenFile("./list.xls")
+	list, err := xls.OpenFile("list.xls")
 	if err != nil {
 		fmt.Println("read xls file error:", err.Error())
 		return
