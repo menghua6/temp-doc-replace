@@ -1,17 +1,40 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	"net/http"
 	"strings"
 
 	"strconv"
 
 	"baliance.com/gooxml/document"
+	"github.com/gin-gonic/gin"
 	"github.com/shakinm/xlsReader/xls"
 )
 
 func main() {
 	// referDate := time.Date(1899, 12, 30, 0, 0, 0, 0, time.Local) 日期数字代表与该日期相差了多少天
+	api := false
+	port := ""
+	flag.BoolVar(&api, "api", false, "open api")
+	flag.StringVar(&port, "port", "", "port")
+	flag.Parse()
+
+	if api {
+		r := gin.Default()
+		r.GET("/", func(ctx *gin.Context) {
+			respose := "" +
+			"文档模板替换 \n" +
+			"\n" +
+			"获取相关文件请求路径 \n" +
+			"/example \n"
+			ctx.String(200,respose)
+		})
+
+		r.StaticFS("/example", http.Dir("example"))
+		r.Run(port)
+	}
 
 	list, err := xls.OpenFile("list.xls")
 	if err != nil {
